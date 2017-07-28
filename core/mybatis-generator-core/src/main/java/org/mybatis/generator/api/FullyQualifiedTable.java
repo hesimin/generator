@@ -49,6 +49,16 @@ public class FullyQualifiedTable {
     private String endingDelimiter;
     private DomainObjectRenamingRule domainObjectRenamingRule;
 
+    private String remark;
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
     /**
      * This object is used to hold information related to the table itself, not the columns in the
      * table.

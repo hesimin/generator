@@ -28,6 +28,7 @@ import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -630,6 +631,25 @@ public class DatabaseIntrospector {
                     delimitIdentifiers,
                     tc.getDomainObjectRenamingRule(),
                     context);
+
+            //设置数据库表的备注信息
+            //start
+            try {
+                Statement stmt = this.databaseMetaData.getConnection().createStatement();
+                ResultSet rs = stmt.executeQuery(
+                        new StringBuilder()
+                                .append("SHOW TABLE STATUS LIKE '")
+                                .append(atn.getTableName())
+                                .append("'")
+                                .toString());
+                while (rs.next())
+                    table.setRemark(rs.getString("COMMENT"));
+                closeResultSet(rs);
+                stmt.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            //end
 
             IntrospectedTable introspectedTable = ObjectFactory
                     .createIntrospectedTable(tc, table, context);
