@@ -407,4 +407,8 @@ public class FullyQualifiedTable {
             sb.append(endingDelimiter);
         }
     }
+
+    public String getDomainObjectSubPackage() {
+        return domainObjectSubPackage;
+    }
 }
